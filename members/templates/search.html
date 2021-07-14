@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} StackOverflow {% endblock %}
+{% block content %}
+
+<h4>Search Results</h1><br/>
+<ul class="list-group">
+   {% for sr in search %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ sr.question | safe }}
+      <span class="btn btn-outline-primary"><a href="{% url 'question_details' sr.pk %}" > View </a></span>
+    </li>
+   {% endfor %}
+</ul>
+
+{% endblock %}
+
+
+

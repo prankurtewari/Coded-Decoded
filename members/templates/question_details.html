@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %} {{ que.title }} {% endblock %}
+{% block content %}
+
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">{{ que.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ que.author.first_name}} | {{ que.author.last_name}} | {{ que.created   }}</h6>
+          <p class="card-text">{{ que.question | safe }}</p>
+          {% if user.is_authenticated and user.id == que.author.id %}
+            <a href="{% url 'update_question' que.pk %}" class="btn btn-sm btn-outline-primary"> Edit </a>
+            <a href="{% url 'delete_question' que.pk %}" class="btn btn-sm btn-outline-danger"> Delete </a>
+         {% endif %}
+        </div>
+    </div>
+                
+    <div class="list-group">
+        {% for answered_question in answered_questions %}
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"> Answer </h5>
+                <small> Votes : {{ answered_question.total_likes }}</small>
+            </div>
+            <p class="mb-1">{{ answered_question.answer | safe }}</p>
+            {% if user.is_authenticated and user.id == answered_question.author.id %}
+            <div class="card-text">
+                <a href="{% url 'update_answer' answered_question.id %}" class="btn btn-sm btn-outline-primary"> Edit </a>
+                <a href="{% url 'delete_answer' answered_question.id %}" class="btn btn-sm btn-outline-danger"> Delete </a>
+            </div> <br/> <br/>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <form action="{% url 'like_post' que.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="upvote" value="{{ answered_question.id }}" class='btn btn-success'>Upvote
+                </button>
+                <button type="submit" name="downvote" value="{{ answered_question.id }}" class='btn btn-danger'>
+                    Downvote</button>
+            </form>
+            {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+                
+    <br/><br/>
+    <div class="text-center">
+        {% if user.is_authenticated %}
+        <a href="{% url 'add_answer' que.pk %}" class='btn btn-outline-warning btn-lg'>Add Answer</a> <br/><br/>
+    {% else %}
+        <form class="justify-space-between align-items-center">
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">Login to Answer</a>
+            <a href="{% url 'register' %}" class="btn btn-primary">Sign-up to Answer</a>
+        </form>
+    {% endif %}
+    </div>
+                
+{% endblock %}

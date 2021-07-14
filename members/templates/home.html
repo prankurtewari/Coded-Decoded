@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %} StackOverflow {% endblock %}
+{% block content %}
+
+<h4>Answered Question</h1><br/>
+<ul class="list-group">
+    {% for allquestionwithanswer in allquestionswithanswers %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ allquestionwithanswer.question | safe }}
+      <span class="btn btn-outline-primary"><a href="{% url 'question_details' allquestionwithanswer.pk %}"> View </a></span>
+    </li>
+    {% endfor %}
+</ul>
+
+<br/><br/>
+
+<h4>Unanswered</h1>
+<ul class="list-group">
+    {% for question_list in question_lists %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ question_list.question | safe  }}
+        <span class="btn btn-outline-primary"><a href="{% url 'question_details' question_list.pk %}"> View </a></span>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+
+
+
+
+<!-- {{ question_list.user | safe }} -->
+
+
+<!-- <h1> Questions with Answer </h1>
+<ul>
+    {% for allquestionwithanswer in allquestionswithanswers %}
+        <li>
+            <a href="{% url 'question_details' allquestionwithanswer.pk %}">
+            {{ allquestionwithanswer.title }} </a> - 
+            {{ allquestionwithanswer.author.first_name }} 
+            {{ allquestionwithanswer.author.last_name}}
+            {{ allquestionwithanswer.created   }} 
+            {% if user.is_authenticated and user.id == allquestionwithanswer.author.id %}
+                    -<a href="{% url 'update_question' allquestionwithanswer.pk %}"> Edit </a> - 
+                    <a href="{% url 'delete_question' allquestionwithanswer.pk %}"> Delete </a>
+            {% endif %}
+            - <a href="{% url 'category' allquestionwithanswer.category %}"> {{ allquestionwithanswer.category | safe| slugify }} </a>  -->
+            <!-- {{ allquestionwithanswer.category | safe| slugify }} -->
+            <!-- slugify is used in order to replace the whitespaces in url with a hyphen '-' -->
+            <!-- <br/>
+                {{ allquestionwithanswer.question_id }} {{ allquestionwithanswer.user }}<br><br>
+            <br><br>
+                {{ allquestionwithanswer.answer }}
+            <br/>
+            {% if user.is_authenticated %}
+                <a href="{% url 'question_details' allquestionwithanswer.pk %}">Add Answer</a>
+            {% endif %}
+        </li> -->
+            <!-- Django doesn't allow normal html to inject, so to allow it we use safe tag over here -->
+    <!-- {% endfor %}
+</ul>
+
+<br/>
+<br/>
+<h1> Questions without Answer </h1>
+<ul>
+    {% for question_list in allquestionswithoutanswers %}
+        <li>
+            <a href="{% url 'question_details' question_list.pk %}">
+            {{ question_list.title }} </a> - 
+            {{ question_list.author.first_name }} 
+            {{ question_list.author.last_name}}
+            {{ question_list.created   }} 
+            {% if user.is_authenticated and user.id == question_list.author.id %}
+                    -<a href="{% url 'update_question' question_list.pk %}"> Edit </a> - 
+                    <a href="{% url 'delete_question' question_list.pk %}"> Delete </a>
+            {% endif %} -->
+            <!-- - <a href="{% url 'category' allquestionwithanswer.category %}"> {{ allquestionwithanswer.category | safe| slugify }} </a>  -->
+            <!-- {{ question_list.category | safe| slugify }} -->
+            <!-- slugify is used in order to replace the whitespaces in url with a hyphen '-' -->
+            <!-- <br/>
+                {{ question_list.question_id }} {{ question_list.user }}<br><br>
+            <br><br>
+                {{ question_list.answer }}
+            <br/>
+            {% if user.is_authenticated %}
+                <a href="{% url 'question_details' question_list.pk %}">Add Answer</a>
+            {% endif %}
+        </li> -->
+            <!-- Django doesn't allow normal html to inject, so to allow it we use safe tag over here -->
+    <!-- {% endfor %} -->
+<!-- </ul> --> 

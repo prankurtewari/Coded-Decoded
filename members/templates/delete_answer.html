@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} {% if user.is_authenticated %} Delete {% else %} Error 404 {% endif %} {% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+
+   <h1>Delete Answer</h1>
+   <br/> 
+          
+   <form class='form-group' method="POST">
+       {% csrf_token %}
+       <strong> Are you sure? !</strong>
+       <br/>
+       <div class="col-12">
+           <button type="submit" class="btn btn-primary">Delete Post</button>
+       </div>
+   </form>
+{% else %}
+   <div class="alert alert-danger" role="alert">
+       You are not authorised user. Please <a href="{% url 'login' %}" class="alert-link">login</a> here.
+   </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} {% if user.is_authenticated %} Add Answer {% else %} Error 404 {% endif %} {% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        {{ ques_kundli.author.first_name}} | {{ ques_kundli.author.last_name }} |||||| {{ user.first_name }} | {{ user.last_name }}
+        <h1>Post Answer</h1>
+        <br/> 
+        <div>
+            <form class="form-group" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Give the Title"
+                        name="title" value = "{{ ques_kundli.title}}" readonly>
+                </div>
+                <label for="exampleFormControlInput1" class="form-label">Question</label>
+                <textarea cols="80" id="editor1" name="question" rows="10" data-sample-short readonly>{{ ques_kundli.question }}</textarea>
+                <br/><br/>
+                <label for="exampleFormControlInput1" class="form-label">Add Your Answer</label>
+                <textarea cols="80" id="editor1"class="ckeditor" name="answer" rows="10" data-sample-short></textarea>
+                <br/><br/>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Post Answer</button>
+                </div>
+            </form>
+        </div>    
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            You are not logged in. Please <a href="{% url 'login' %}" class="alert-link">login</a> here.
+        </div>
+    {% endif %}
+
+{% endblock %}
